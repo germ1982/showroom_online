@@ -62,7 +62,7 @@ class SiteController extends Controller
        */
       public function actionIndex()
       {
-            Yii::$app->session->setFlash('success', 'Bienvenido <br> al sitio web');
+            //Yii::$app->session->setFlash('success', 'Bienvenido <br> al sitio web');
             return $this->render('index');
       }
 
