@@ -19,13 +19,13 @@
       if (Yii::$app->user->isGuest) {
             $menuItemsRight[] = ['label' => '<i class="bi bi-person neon"></i> INGRESAR', 'url' => ['/site/login'], 'encode' => false];
       } else {
-            $menuItemsRight[] = ['label' => 'FAVORITOS', 'url' => ['/producto/favoritos']];
-            $menuItemsRight[] = ['label' => 'PUBLICAR', 'url' => ['/producto/crear']];
-            $menuItemsRight[] = ['label' => 'MIS PRODUCTOS', 'url' => ['/producto/mis-productos']];
+            $menuItemsRight[] = ['label' => '<i class="bi bi-star neon"></i> FAVORITOS', 'url' => ['/producto/favoritos'], 'encode' => false];
+            $menuItemsRight[] = ['label' => '<i class="bi bi-megaphone neon"></i> PUBLICAR', 'url' => ['/producto/crear'], 'encode' => false];
+            $menuItemsRight[] = ['label' => '<i class="bi bi-box-seam neon"></i> MIS PRODUCTOS', 'url' => ['/producto/mis-productos'], 'encode' => false];
             $menuItemsRight[] = ['label' => '<i class="bi bi-person neon"></i> '.mb_strtoupper(Yii::$app->user->identity->username), 'url' => ['/producto/usuario'], 'encode' => false];
             // Botón Logout
             $menuItemsRight[] = [
-                  'label' => 'SALIR <i class="bi bi-box-arrow-right"></i>',
+                  'label' => 'SALIR <i class="bi bi-box-arrow-right neon"></i>',
                   'url' => ['/site/logout'],
                   'encode' => false,
                   'linkOptions' => [
