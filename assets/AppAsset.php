@@ -24,6 +24,9 @@ class AppAsset extends AssetBundle
         'css/tema-moderno-elegante.css',
     ];
     public $js = [
+      // Agregas la línea aquí. 
+        // Yii detecta que es una URL externa y no un archivo local.
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11',
     ];
     public $depends = [
         'yii\web\YiiAsset',

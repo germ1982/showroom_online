@@ -1,4 +1,5 @@
 <?php
+
 use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
@@ -20,30 +21,71 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
+      <title><?= Html::encode($this->title) ?></title>
+      <?php $this->head() ?>
 </head>
+
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+      <?php $this->beginBody() ?>
 
- <?= $this->render('header') ?><!-- HEADER IMPORTADO -->
-
-
-<main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</main>
-            
- <?= $this->render('footer') ?><!-- FOOTER IMPORTADO -->
+      <?= $this->render('header') ?><!-- HEADER IMPORTADO -->
 
 
-<?php $this->endBody() ?>
+      <main id="main" class="flex-shrink-0" role="main">
+            <div class="container">
+                  <?php if (!empty($this->params['breadcrumbs'])): ?>
+                        <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+                  <?php endif ?>
+                  
+                  <?= $content ?>
+            </div>
+      </main>
+
+      <?= $this->render('footer') ?><!-- FOOTER IMPORTADO -->
+
+
+      <?php $this->endBody() ?>
+
+      <?php
+      // BLOQUE PARA DISPARAR SWEETALERT
+      // Este código solo se encarga de imprimir el JS de configuración, 
+      // la librería ya la cargó el AppAsset.
+
+      $flashes = Yii::$app->session->getAllFlashes();
+      if ($flashes) {
+            foreach ($flashes as $type => $message) {
+                  $icon = 'info';
+                  $title = 'Información';
+
+                  if ($type === 'success') {
+                        $icon = 'success';
+                        $title = '¡Éxito!';
+                  } elseif ($type === 'error' || $type === 'danger') {
+                        $icon = 'error';
+                        $title = 'Error';
+                  } elseif ($type === 'warning') {
+                        $icon = 'warning';
+                        $title = 'Atención';
+                  }
+
+                  //$msgJson = \yii\helpers\Json::htmlEncode($message);
+                  $msgJson = \yii\helpers\Json::encode($message);
+
+                  $this->registerJs("
+            Swal.fire({
+                title: '$title',
+                html: $msgJson,
+                icon: '$icon',
+                confirmButtonText: 'Aceptar'
+            });
+        ");
+            }
+      }
+      ?>
+
 </body>
+
 </html>
 <?php $this->endPage() ?>

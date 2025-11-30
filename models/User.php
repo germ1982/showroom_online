@@ -47,14 +47,12 @@ class User extends ActiveRecord implements IdentityInterface
                   ['password', 'string', 'min' => 6],
 
                   [['password'], 'string', 'max' => 255],
-                  [['authKey', 'accessToken'], 'string', 'max' => 255],
+                  [['auth_key', 'access_token'], 'string', 'max' => 255],
                   ['status', 'in', 'range' => [
                         self::STATUS_ACTIVE,
                         self::STATUS_DELETED,
                   ]],
                   ['status', 'default', 'value' => self::STATUS_ACTIVE],
-                  ['status', 'default', 'value' => 1],
-                  ['status', 'in', 'range' => [0, 1]],
             ];
       }
 
@@ -69,8 +67,8 @@ class User extends ActiveRecord implements IdentityInterface
                   'email'     => 'Correo electrónico',
                   'password'  => 'Contraseña',
                   'status'    => 'Estado',
-                  'authKey' => 'Clave de Autenticación',
-                  'accessToken' => 'Token de Acceso',
+                  'auth_key' => 'Clave de Autenticación',
+                  'access_token' => 'Token de Acceso',
             ];
       }
 
@@ -110,13 +108,13 @@ class User extends ActiveRecord implements IdentityInterface
       //Devuelve auth_key (cookie de sesión segura).
       public function getAuthKey()
       {
-            return $this->authKey;
+            return $this->auth_key;
       }
 
       //Valida auth_key.
-      public function validateAuthKey($authKey)
+      public function validateAuthKey($auth_key)
       {
-            return $this->authKey === $authKey;
+            return $this->auth_key === $auth_key;
       }
 
       // ---------------------------------------------------------
@@ -132,19 +130,19 @@ class User extends ActiveRecord implements IdentityInterface
       //Genera un hash de la contraseña que ingresa por parametro
       public function setPassword($password)
       {
-            $this->password = Yii::$app->security->generatePasswordHash($password);
+            $this->password_hash = Yii::$app->security->generatePasswordHash($password);
       }
 
       //Genera una nueva auth_key (recordarme, sesiones).
       public function generateAuthKey()
       {
-            $this->authKey = Yii::$app->security->generateRandomString();
+            $this->auth_key = Yii::$app->security->generateRandomString();
       }
 
       //Genera un nuevo access_token (API).
       public function generateAccessToken()
       {
-            $this->accessToken = Yii::$app->security->generateRandomString();
+            $this->access_token= Yii::$app->security->generateRandomString();
       }
 
       // ---------------------------------------------------------

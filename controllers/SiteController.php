@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\UserSignupForm;
 
 class SiteController extends Controller
 {
@@ -61,6 +62,7 @@ class SiteController extends Controller
        */
       public function actionIndex()
       {
+            Yii::$app->session->setFlash('success', 'Bienvenido <br> al sitio web');
             return $this->render('index');
       }
 
@@ -71,6 +73,7 @@ class SiteController extends Controller
        */
       public function actionLogin()
       {
+
             //es raro que ocurra esto primer if, pero bueno, si el usuario ya esta logueado no tiene sentido que vuelva a loguearse  
             if (!Yii::$app->user->isGuest) { //isGuest (es invitado )pregunta si el usuario no es invitado, osea si es un usuario y esta logueado
                   return $this->goHome(); //si era usaurio y  estaba logueado por default se va a actionIndex de este mismo controlador el cual va a la vista index
@@ -127,5 +130,24 @@ class SiteController extends Controller
       public function actionAbout()
       {
             return $this->render('about');
+      }
+
+      public function actionRegistro()
+      {
+            $model = new UserSignupForm();
+
+            if ($model->load(Yii::$app->request->post()) && $user = $model->signup()) {
+                  if (Yii::$app->getUser()->login($user)) {
+                        Yii::$app->session->setFlash('success', 'Tu cuenta se creó correctamente.');
+                  } else {
+                        Yii::$app->session->setFlash('error', 'Hubo un error al iniciar sesión con tu nueva cuenta.');
+                  }
+
+                  return $this->goHome();
+            }
+
+            return $this->render('registro', [
+                  'model' => $model,
+            ]);
       }
 }

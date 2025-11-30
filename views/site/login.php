@@ -2,55 +2,85 @@
 
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
-
 /** @var app\models\LoginForm $model */
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+use yii\bootstrap5\NavBar;
+use yii\bootstrap5\Nav;
+
+
+$this->title = 'Iniciar sesión';
+
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<style>
+      .div-boton {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+      }
 
-    <div class="row">
-        <div class="col-lg-5">
+      .custom-box {
+            border-radius: 10px;
+            padding: 15px 40px 16px 40px;
+            box-shadow: 0 0 20px #00bfff;
+      }
 
-            <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'fieldConfig' => [
-                    'template' => "{label}\n{input}\n{error}",
-                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                ],
-            ]); ?>
+       @media (max-width: 768px) {
+            .centro-celu {
+                  padding: 0px 15px 0px 15px;
+            }
+       }
+</style>
 
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+<div class="row justify-content-center overlay-div centro-celu">
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+      <div class="col-md-4">
 
-            <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            ]) ?>
+      </div>
 
-            <div class="form-group">
-                <div>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?> 
-                    <!-- este submit va al siteController -->
-                </div>
-            </div>
+      <div class="col-md-4 custom-box">
+            <h2><?= Html::encode($this->title) ?></h2>
+
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+
+                  <?= $form->field($model, 'username')->textInput(['autofocus' => true,])->label('Usuario') ?>
+                  <?= $form->field($model, 'password')->passwordInput()->label('Contraseña') ?>
+
+
+                  <?= $form->field($model, 'rememberMe')->checkbox()->label('Mantener sesión iniciada') ?>
+
+                  <div class="div-boton">
+                        <?= Html::submitButton('Iniciar', ['class' => 'btn btn-search', 'name' => 'login-button']) ?>
+                  </div>
+
+                  <div style="margin-top:15px;">
+                        <?= Html::a('¿No tenés cuenta? Registrate acá', ['/site/registro'], [
+                              'style' => 'font-size:14px; text-decoration: underline;'
+                        ]) ?>
+                  </div>
+
+                  
+                  <?php if ($model->hasErrors('password')): ?>
+                        <div style="margin-top:15px;">
+                              <?= Html::a('¿Olvidaste tu contraseña?', ['/site/solicitar-reset'], [
+                                    'style' => 'font-size:14px; text-decoration: underline; display:block; margin-top:8px;'
+                              ]) ?>
+                        </div>
+                  <?php endif; ?>
+    
+
+
 
             <?php ActiveForm::end(); ?>
 
-            <div style="color:#999;">
-                You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-                To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-            </div>
+      </div>
 
-        </div>
-    </div>
+      <div class="col-md-4">
+
+      </div>
 </div>
+            
