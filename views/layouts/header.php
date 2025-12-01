@@ -22,7 +22,7 @@
             $menuItemsRight[] = ['label' => '<i class="bi bi-star neon"></i> FAVORITOS', 'url' => ['/producto/favoritos'], 'encode' => false];
             $menuItemsRight[] = ['label' => '<i class="bi bi-megaphone neon"></i> PUBLICAR', 'url' => ['/producto/crear'], 'encode' => false];
             $menuItemsRight[] = ['label' => '<i class="bi bi-box-seam neon"></i> MIS PRODUCTOS', 'url' => ['/producto/mis-productos'], 'encode' => false];
-            $menuItemsRight[] = ['label' => '<i class="bi bi-person neon"></i> '.mb_strtoupper(Yii::$app->user->identity->username), 'url' => ['/producto/usuario'], 'encode' => false];
+            $menuItemsRight[] = ['label' => '<i class="bi bi-person neon"></i> '.mb_strtoupper(Yii::$app->user->identity->username), 'url' => ['/user/update', 'id' => Yii::$app->user->id], 'encode' => false];
             // Botón Logout
             $menuItemsRight[] = [
                   'label' => 'SALIR <i class="bi bi-box-arrow-right neon"></i>',
