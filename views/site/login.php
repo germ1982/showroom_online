@@ -15,25 +15,6 @@ $this->title = 'Iniciar sesión';
 
 ?>
 
-<style>
-      .div-boton {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-      }
-
-      .custom-box {
-            border-radius: 10px;
-            padding: 15px 40px 16px 40px;
-            box-shadow: 0 0 20px #00bfff;
-      }
-
-       @media (max-width: 768px) {
-            .centro-celu {
-                  padding: 0px 15px 0px 15px;
-            }
-       }
-</style>
 
 <div class="row justify-content-center overlay-div centro-celu">
 
