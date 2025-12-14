@@ -1,5 +1,5 @@
 main>.container {
-      padding: 70px 15px 20px;
+      padding: 65px 15px 20px;
 }
 
 .footer {
@@ -72,6 +72,10 @@ a.desc:after {
             width: 100%;
             padding: 10px 0;
       }
+
+      main>.container {
+      padding-top: 55px;
+}
 }
 
 .nav>li>form>button.logout:focus,
@@ -102,7 +106,14 @@ a.desc:after {
       }
 
        @media (max-width: 768px) {
+            
             .centro-celu {
                   padding: 0px 15px 0px 15px;
+            }
+
+            .custom-box {
+
+                  margin-bottom: 40px;
+
             }
        }

@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -8,41 +9,49 @@ use yii\widgets\ActiveForm;
 ?>
 
 
-    <?php $form = ActiveForm::begin(); ?>
-    <div class="row justify-content-center overlay-div centro-celu">
+<?php $form = ActiveForm::begin(); ?>
+<div class="row justify-content-center overlay-div centro-celu">
+
+      <div class="col-md-4">
+            <div class="row">
+                  <div class="col-md-12">
+                        <?= $model->rol == 1 ? $this->render('_form_panel_administrador') : '' ?>
+                  </div>
+            </div>
+            <br>
+            <div class="row">
+                  <div class="col-md-12">
+                        <?= $this->renderFile('@webroot/publicidades/liliana_catering.php'); ?>
+                  </div>
+            </div>
+      </div>
+
+      <div class="col-md-4">
+            <div class="custom-box">
+                  <h4>Mis Datos</h4>
+
+                  <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
+
+                  <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+                  <div class="div-boton">
+                        <?= Html::submitButton('Update', ['class' => 'btn btn-search']) ?>
+                  </div>
+            </div>
+      </div>
+
 
       <div class="col-md-4">
 
+            <?= $this->renderFile('@webroot/publicidades/hector_catering.php'); ?>
       </div>
 
-      <div class="col-md-4 custom-box">
-
-          <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'access_token')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    	<?php if (!Yii::$app->request->isAjax){ ?>
-	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-	    </div>
-	<?php } ?>
-
-        </div>
-
-      <div class="col-md-4">
-
-      </div>
+</div>
 
 
-  
 
 
-    <?php ActiveForm::end(); ?>
-    
 
+
+
+<?php ActiveForm::end(); ?>
