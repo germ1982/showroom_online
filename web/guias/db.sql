@@ -3,6 +3,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `telefono` VARCHAR(15) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `access_token` varchar(255) DEFAULT NULL,
   `auth_key` varchar(255) NOT NULL,
@@ -12,10 +13,14 @@ CREATE TABLE `user` (
   `rol` int(11) DEFAULT 3,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `telefono` (`telefono`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
+/* probar esto y borrar */
+ALTER TABLE `showroom`.`user` 
+ADD COLUMN `telefono` VARCHAR(15) NOT NULL AFTER `email`
+UNIQUE KEY `telefono` (`telefono`);
 
 CREATE TABLE `dato` (
   `iddato` int(11) NOT NULL AUTO_INCREMENT,

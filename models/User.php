@@ -38,7 +38,8 @@ class User extends ActiveRecord implements IdentityInterface
       public function rules()
       {
             return [
-                  [['username', 'email'], 'required'],
+                  [['username', 'email','telefono'], 'required'],
+                  [['telefono'], 'integer'],
                   // Password solo es obligatorio al crear (no al actualizar)
                   ['password', 'required', 'on' => 'create'],
                   [['username', 'email'], 'string', 'max' => 100],
