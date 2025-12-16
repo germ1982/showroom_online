@@ -17,10 +17,6 @@ CREATE TABLE `user` (
   UNIQUE KEY `telefono` (`telefono`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/* probar esto y borrar */
-ALTER TABLE `showroom`.`user` 
-ADD COLUMN `telefono` VARCHAR(15) NOT NULL AFTER `email`
-UNIQUE KEY `telefono` (`telefono`);
 
 CREATE TABLE `dato` (
   `iddato` int(11) NOT NULL AUTO_INCREMENT,

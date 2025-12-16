@@ -34,6 +34,8 @@ use yii\widgets\ActiveForm;
 
                   <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
+                  <?= $form->field($model, 'telefono')->textInput(['maxlength' => true]) ?>
+
                   <div class="div-boton">
                         <?= Html::submitButton('Update', ['class' => 'btn btn-search']) ?>
                   </div>
