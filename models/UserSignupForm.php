@@ -10,6 +10,7 @@ class UserSignupForm extends Model
 {
       public $username;
       public $email;
+      public $telefono;
       public $password;
       public $password_repeat;
       public $status;
@@ -17,7 +18,7 @@ class UserSignupForm extends Model
       public function rules()
       {
             return [
-                  [['username', 'email', 'password', 'password_repeat'], 'required'],
+                  [['username', 'email', 'password', 'password_repeat','telefono'], 'required'],
 
                   ['status', 'default', 'value' => 10],
                   ['email', 'email'],
