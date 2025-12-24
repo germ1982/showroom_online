@@ -182,7 +182,7 @@ use yii\helpers\Url;
                             <li>Livings, Barras Móviles y Pistas de Baile</li>
                         </ul>
                         <div class="item-image-placeholder">
-                            <img src="<?= Url::to('@web/img/publicidades/alquiler_mobiliario.jpg') ?>" class="d-block w-100" alt="Mobiliario de Eventos">
+                            <img src="<?= Url::to('@web/img/publicidades/liliana_catering_01.jpg') ?>" class="d-block w-100" alt="Mobiliario de Eventos">
                         </div>
                     </div>
                 </div>
@@ -195,7 +195,7 @@ use yii\helpers\Url;
                             <li>Copas, Vasos y Jarras de Cristal</li>
                         </ul>
                         <div class="item-image-placeholder">
-                            <img src="<?= Url::to('@web/img/publicidades/alquiler_menaje.jpg') ?>" class="d-block w-100" alt="Vajilla y Copas">
+                            <img src="<?= Url::to('@web/img/publicidades/liliana_catering_02.jpg') ?>" class="d-block w-100" alt="Vajilla y Copas">
                         </div>
                     </div>
                 </div>
