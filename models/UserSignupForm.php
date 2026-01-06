@@ -51,6 +51,7 @@ class UserSignupForm extends Model
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->telefono = $this->telefono;
             $user->status = User::STATUS_ACTIVE;
             $user->password_hash = Yii::$app->security->generatePasswordHash($this->password); // genera hash
             $user->auth_key = Yii::$app->security->generateRandomString();

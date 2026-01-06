@@ -70,6 +70,7 @@ class User extends ActiveRecord implements IdentityInterface
                   'status'    => 'Estado',
                   'auth_key' => 'Clave de Autenticación',
                   'access_token' => 'Token de Acceso',
+                  'telefono' => 'Teléfono',
             ];
       }
 

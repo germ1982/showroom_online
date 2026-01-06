@@ -11,14 +11,14 @@ use yii\widgets\DetailView;
         'model' => $model,
         'attributes' => [
             'id',
-            'username',
+           /*  'username',
             'email:email',
             'password_hash',
             'auth_key',
             'access_token',
             'status',
             'created_at',
-            'updated_at',
+            'updated_at', */
         ],
     ]) ?>
 
