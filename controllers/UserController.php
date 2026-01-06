@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -148,8 +149,8 @@ class UserController extends Controller
 
             if ($request->isAjax) {
                   /*
-            *   Process for ajax request
-            */
+                  *   Process for ajax request
+                  */
                   Yii::$app->response->format = Response::FORMAT_JSON;
                   if ($request->isGet) {
                         return [
@@ -266,10 +267,10 @@ class UserController extends Controller
             }
       }
 
-      public function actionChangePasswordAjax()
+      public function actionChange_password()
       {
-            return ['success' => true];      seguir aca
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            //return ['success' => true];  
+            Yii::$app->response->format = Response::FORMAT_JSON;
 
             $request = Yii::$app->request;
             $pActual = $request->post('actual');
@@ -285,7 +286,14 @@ class UserController extends Controller
             // 2. Setear y guardar
             $user->setPassword($pNueva);
             if ($user->save()) {
-                  return ['success' => true];
+                  // 1. Cerramos la sesión en el servidor
+                  Yii::$app->user->logout();
+
+                  // 2. Devolvemos la URL a la que debe redirigir el JS
+                  return [
+                        'success' => true,
+                        'url' => Url::to(['site/login'])
+                  ];
             } else {
                   return ['success' => false, 'message' => 'No se pudo guardar la nueva contraseña.'];
             }

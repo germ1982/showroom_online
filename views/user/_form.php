@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
 <?php ActiveForm::end(); ?>
 
 <?php
-$urlCambio = Url::to(['user/change-password-ajax']); // Ajusta a tu controller
+$urlCambio = Url::to(['user/change_password']); // Ajusta a tu controller
 $script = <<< JS
 $('#btn-confirmar-pass').on('click', function() {
 
@@ -102,16 +102,18 @@ $('#btn-confirmar-pass').on('click', function() {
     var pRepetir = $('#pass_repetir').val();
     
 
-if (pNueva === '' || pRepetir === '') {
-    $('#password-message').html('<span class="text-danger">Por favor, completa ambos campos de nueva contraseña.</span>');
-    return;
-}
+      if (pNueva === '' || pRepetir === '' || pActual === '') {
+      $('#password-message').html('<span class="text-danger">Hay Campos Vacios.</span>');
+      return;
+      }
 
     // Validación básica en JS antes de enviar
     if(pNueva !== pRepetir) {
         $('#password-message').html('<span class="text-danger">Las nuevas contraseñas no coinciden.</span>');
         return;
     }
+
+    console.log('validaciones de campos correctas');
 
     $.ajax({
         url: '$urlCambio',
@@ -121,18 +123,29 @@ if (pNueva === '' || pRepetir === '') {
             nueva: pNueva,
         },
         success: function(response) {
+            console.log('llego hasta aca');
             if(response.success) {
-                alert('Contraseña cambiada con éxito');
-                $('#new-password').hide();
-                $('#mis-datos').show();
-                // Limpiar campos
-                $('#pass_actual, #pass_nueva, #pass_repetir').val('');
+                  Swal.fire({
+                  icon: 'success',
+                  title: '¡Contraseña actualizada!',
+                  text: 'Tu sesión se cerrará por seguridad. Ingresa con tu nueva clave.',
+                  timer: 3000, // 3 segundos
+                  timerProgressBar: true,
+                  showConfirmButton: false
+            }).then(() => {
+                // REDIRECCIÓN AL LOGIN
+                window.location.href = response.url;
+            });
             } else {
                 $('#password-message').html('<span class="text-danger">' + response.message + '</span>');
             }
         },
         error: function() {
-            alert('Error en el servidor al intentar cambiar la clave.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: response.message,
+            });
         }
     });
 });
