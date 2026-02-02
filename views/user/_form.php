@@ -1,23 +1,25 @@
 <?php
 
+use app\models\User_rol;
+use app\models\User_usuario_rol;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\User */
-/* @var $form yii\widgets\ActiveForm */
+$userid = Yii::$app->user->identity->id;
+$idrol_admin = User_rol::find()->where(['nombre' => 'Administrador'])->one()->idrol;
+$rol = User_usuario_rol::find()->where(['idusuario' => $userid,'idrol' => $idrol_admin])->one();
 ?>
 
 
 <?php $form = ActiveForm::begin(); ?>
-<div class="row justify-content-center overlay-div centro-celu">
+<div class="row justify-content-center overlay-div centro-celu custom-main">
 
       <div class="col-md-4">
             <div class="row">
                   <div class="col-md-12">
-                        <?= $model->rol == 1 ? $this->render('_form_panel_administrador') : '' ?>
+                        <?= $rol ? $this->render('_form_panel_administrador') : '' ?>
                   </div>
             </div>
             <br>
@@ -39,12 +41,14 @@ use yii\widgets\ActiveForm;
 
                   <?= $form->field($model, 'telefono')->textInput(['maxlength' => true]) ?>
 
+
                   <div class="div-boton">
-                        <?= Html::submitButton('Guardar', ['class' => 'btn btn-search']) ?>
-                        <?= Html::button('Cambiar Contraseña', [
-                              'class' => 'btn btn-search',
-                              'onclick' => "$('#mis-datos').hide(); $('#new-password').show();"
+
+                        <?= Html::a('Cambiar Contraseña', '#', [
+                              'onclick' => "$('#mis-datos').hide(); $('#new-password').show(); return false;"
                         ]) ?>
+                        <br><br>
+                        <?= Html::submitButton('Guardar', ['class' => 'btn btn-search']) ?>
                   </div>
             </div>
             <div class="custom-box" id='new-password' style="display:none">
@@ -82,7 +86,10 @@ use yii\widgets\ActiveForm;
 
       <div class="col-md-4">
 
-            <?php //$this->renderFile('@webroot/publicidades/hector_catering.php'); 
+
+
+            <?php
+            //$this->renderFile('@webroot/publicidades/hector_catering.php'); 
             ?>
       </div>
 

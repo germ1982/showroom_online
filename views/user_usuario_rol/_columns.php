@@ -2,38 +2,29 @@
 use yii\helpers\Url;
 
 return [
-
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'username',
+        'class' => 'kartik\grid\CheckboxColumn',
+        'width' => '20px',
     ],
     [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'email',
+        'class' => 'kartik\grid\SerialColumn',
+        'width' => '30px',
     ],
-      [
-            'class'=>'\kartik\grid\DataColumn',
-            'attribute'=>'telefono',
-      ],
-[
-      'attribute' => 'rol',
-    'label' => 'Rol',
-    'value' => function ($model) {
-        return implode(', ', array_column($model->roles, 'nombre'));
-    },
-
-],
-    // [
+        // [
         // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'status',
+        // 'attribute'=>'id',
     // ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'idusuario',
+    ],
+    [
+        'class'=>'\kartik\grid\DataColumn',
+        'attribute'=>'idrol',
+    ],
     // [
         // 'class'=>'\kartik\grid\DataColumn',
         // 'attribute'=>'created_at',
-    // ],
-    // [
-        // 'class'=>'\kartik\grid\DataColumn',
-        // 'attribute'=>'updated_at',
     // ],
     [
         'class' => 'kartik\grid\ActionColumn',

@@ -1,5 +1,6 @@
 main>.container {
-      padding: 65px 15px 20px;
+      /* padding: 65px 15px 20px; */
+      max-width: 100%!important;
 }
 
 .footer {
@@ -16,6 +17,10 @@ main>.container {
 .not-set {
       color: #c55;
       font-style: italic;
+}
+
+a.navbar-brand {
+      color: #fff!important;
 }
 
 /* add sorting icons to gridview sort links */
@@ -60,6 +65,12 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
+
+.navbar {
+      margin-bottom: 1px!important;
+      padding: 0% !important;
+      
+}
 .nav li>form>button.logout {
       padding-top: 7px;
       color: rgba(255, 255, 255, 0.5);
@@ -92,11 +103,18 @@ a.desc:after {
       margin-bottom: 1rem;
 }
 
+       /* user form */
+
 /* FORMULARIOS-LOGIN-USUARIO-REGISTRO----------------------------------------------------------------------------------------- */
       .div-boton {
             justify-content: center;
             align-items: center;
             text-align: center;
+      }
+
+      .custom-main {
+            background-color: #f5f5f5;
+            padding: 50px 0px 50px 0px;
       }
 
       .custom-box {
@@ -117,3 +135,10 @@ a.desc:after {
 
             }
        }
+
+       /* index generico */
+      .breadcrumb {
+            margin-bottom: 0px!important;
+
+}
+

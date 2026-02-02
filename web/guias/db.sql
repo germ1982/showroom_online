@@ -35,8 +35,27 @@ CREATE TABLE `dato_tipo` (
   UNIQUE KEY `uc_descripcion` (`constante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE user_rol (
+    idrol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(150) NULL,
+    activo TINYINT(1) DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
-/* datos troncales */
-INSERT INTO `dato_tipo` (`idtipo`, `descripcion`) VALUES
-(1, 'Tipo de Documento'),
-(2, 'Rol de Usuario');
+CREATE TABLE user_usuario_rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idusuario INT NOT NULL,
+    idrol INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE KEY uk_usuario_rol (idusuario, idrol),
+
+    CONSTRAINT fk_urol_usuario
+        FOREIGN KEY (idusuario) REFERENCES user(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_urol_rol
+        FOREIGN KEY (idrol) REFERENCES user_rol(idrol)
+        ON DELETE CASCADE
+);

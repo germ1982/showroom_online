@@ -4,9 +4,18 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+      'timeZone' => 'America/Argentina/Buenos_Aires',
       'id' => 'basic',
+      'language' => 'es',
       'basePath' => dirname(__DIR__),
       'bootstrap' => ['log'],
+      'modules' => [
+            'gridview' => [
+                  'class' => 'kartik\grid\Module',
+                  'bsVersion' => 3,
+            ],
+      ],
+
       'aliases' => [
             '@bower' => '@vendor/bower-asset',
             '@npm'   => '@vendor/npm-asset',

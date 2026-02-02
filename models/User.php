@@ -26,6 +26,7 @@ use Yii;
 class User extends ActiveRecord implements IdentityInterface
 {
       public $password;
+      public $rol;
 
       const STATUS_DELETED = 0;
       const STATUS_ACTIVE  = 10;
@@ -170,4 +171,16 @@ class User extends ActiveRecord implements IdentityInterface
 
             return false;
       }
+
+      public function getUsuarioRoles()
+{
+    return $this->hasMany(User_usuario_rol::class, ['idusuario' => 'id']);
+}
+
+public function getRoles()
+{
+    return $this->hasMany(User_rol::class, ['idrol' => 'idrol'])
+        ->via('usuarioRoles');
+}
+
 }

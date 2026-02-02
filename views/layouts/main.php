@@ -2,8 +2,8 @@
 
 use app\assets\AppAsset;
 use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
+use yii\helpers\Html;
+use yii\widgets\Breadcrumbs;
 
 
 AppAsset::register($this);
@@ -35,9 +35,7 @@ $this->registerCssFile('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font
 
       <main id="main" class="flex-shrink-0" role="main">
             <div class="container">
-                  <?php if (!empty($this->params['breadcrumbs'])): ?>
-                        <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-                  <?php endif ?>
+
                   
                   <?= $content ?>
             </div>

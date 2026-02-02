@@ -4,6 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use app\models\User;
+use PHPUnit\Framework\Constraint\Count;
 use Yii;
 
 class UserSignupForm extends Model
@@ -47,6 +48,40 @@ class UserSignupForm extends Model
             if (!$this->validate()) {
                   return false;
             }
+           
+
+            $roles = User_rol::find()->all();
+            if (count($roles) == 0) {
+                  $idrol_admin = 1; // Asumimos que el ID del rol administrador es 1
+                  // Si no hay roles, crear rol por defecto
+                  $rol = new User_rol();
+                  $rol->nombre = 'Administrador';
+                  $rol->descripcion = 'Rol de administrador del sistema';
+                  $rol->activo = 1;
+                  $rol->save();
+                  $idroladmin = $rol->idrol;
+
+                  $rol = new User_rol();
+                  $rol->nombre = 'Vendedor Vip';
+                  $rol->descripcion = 'Vendedores que no pagan comision';
+                  $rol->activo = 1;
+                  $rol->save();
+
+                  $rol = new User_rol();
+                  $rol->nombre = 'Vendedor';
+                  $rol->descripcion = 'Vendedores comunes';
+                  $rol->activo = 1;
+                  $rol->save();
+                  $idrolvendedor = $rol->idrol;
+            }
+            else {
+                  $rol = User_rol::find()->where(['nombre' => 'Vendedor'])->one();
+                  $idrolvendedor = $rol->idrol;
+            }
+
+            $usuarios = User::find()->all();
+            $idrol = count($usuarios) == 0 ? $idroladmin : $idrolvendedor;
+
 
             $user = new User();
             $user->username = $this->username;
@@ -71,6 +106,11 @@ class UserSignupForm extends Model
                   return false;
             }
 
+            // Asignar rol al usuario
+            $userRol = new User_usuario_rol();  
+            $userRol->idusuario = $user->id;
+            $userRol->idrol = $idrol;
+            $userRol->save();
             return $user;
       }
 }
