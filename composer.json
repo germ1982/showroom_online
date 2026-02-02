@@ -20,7 +20,8 @@
         "johnitvn/yii2-ajaxcrud": "dev-master",
         "kartik-v/yii2-widget-select2": "@dev",
         "yiisoft/yii2-bootstrap": "2.0",
-        "kartik-v/yii2-grid": "3.5.*"
+        "kartik-v/yii2-grid": "3.5.*",
+        "yiisoft/yii2-bootstrap4": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -40,6 +41,9 @@
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
+        },
+        "audit": {
+            "block-insecure": false
         }
     },
     "scripts": {

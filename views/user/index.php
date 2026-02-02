@@ -12,7 +12,7 @@ $rol = User_usuario_rol::find()->where(['idusuario' => $userid,'idrol' => $idrol
 $gridColumns = require(__DIR__ . '/_columns.php');
 $customButtonsA = ''; // o define aquí tus botones HTML::a(...) para la izquierda si es necesario
 $customButtonsB = ''; // o define aquí tus botones HTML::a(...) para la derecha si es necesario
-$anchoModal = '1200px'; // Ancho del modal en PX
+$anchoModal = '800px'; // Ancho del modal en PX
 $tamañoLetra = '12px'; // Tamaño de letra para la grilla
 
       //esta parte es especial para usuarios

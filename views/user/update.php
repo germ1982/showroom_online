@@ -2,13 +2,20 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\User */
+$ismodal = $ismodal ?? false; // si no viene, asumimos false
 ?>
 <div class="user-update">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?php
+    if ($ismodal) {
+        echo $this->render('_form_modal', [
+            'model' => $model,
+        ]);
+    } else {
+        echo $this->render('_form', [
+            'model' => $model,
+        ]);
+    }
+    ?>
 
 </div>

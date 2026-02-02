@@ -10,7 +10,6 @@ CREATE TABLE `user` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` tinyint(3) NOT NULL DEFAULT 10 COMMENT '0=Inactivo, 1=Activo',
-  `rol` int(11) DEFAULT 3,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),

@@ -34,6 +34,7 @@ $rol = User_usuario_rol::find()->where(['idusuario' => $userid,'idrol' => $idrol
       <div class="col-md-4">
             <div class="custom-box" id='mis-datos'>
                   <h4>Mis Datos</h4>
+                  <?= $form->field($model, 'id')->hiddenInput(['id' => 'input_iduser'])->label(false) ?> 
 
                   <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
@@ -56,19 +57,19 @@ $rol = User_usuario_rol::find()->where(['idusuario' => $userid,'idrol' => $idrol
 
                   <div class="mb-3">
                         <label>Contraseña Actual</label>
-                        <?= Html::passwordInput('pass_actual', '', ['class' => 'form-control', 'id' => 'pass_actual']) ?>
+                        <?= Html::passwordInput('pass_actual', '', ['class' => 'form-control', 'id' => 'pass_actual', 'autocomplete' => 'new-password']) ?>
                   </div>
 
                   <div class="mb-3">
                         <label>Nueva Contraseña</label>
-                        <?= Html::passwordInput('pass_nueva', '', ['class' => 'form-control', 'id' => 'pass_nueva']) ?>
+                        <?= Html::passwordInput('pass_nueva', '', ['class' => 'form-control', 'id' => 'pass_nueva', 'autocomplete' => 'new-password']) ?>
                   </div>
 
                   <div class="mb-3">
                         <label>Repetir Nueva Contraseña</label>
-                        <?= Html::passwordInput('pass_repetir', '', ['class' => 'form-control', 'id' => 'pass_repetir']) ?>
+                        <?= Html::passwordInput('pass_repetir', '', ['class' => 'form-control', 'id' => 'pass_repetir', 'autocomplete' => 'new-password']) ?>
                   </div>
-
+<br><br>
                   <div class="div-boton">
                         <?= Html::button('Confirmar Cambio', ['class' => 'btn btn-search', 'id' => 'btn-confirmar-pass']) ?>
 
@@ -100,14 +101,17 @@ $rol = User_usuario_rol::find()->where(['idusuario' => $userid,'idrol' => $idrol
 <?php ActiveForm::end(); ?>
 
 <?php
+
 $urlCambio = Url::to(['user/change_password']); // Ajusta a tu controller
 $script = <<< JS
+
 $('#btn-confirmar-pass').on('click', function() {
 
     var pActual  = $('#pass_actual').val();
     var pNueva   = $('#pass_nueva').val();
     var pRepetir = $('#pass_repetir').val();
-    
+    var iduser   = $('#input_iduser').val();
+    var perfil   = true; // Indica que viene de editar el perfil propio desde el formulario de perfil
 
       if (pNueva === '' || pRepetir === '' || pActual === '') {
       $('#password-message').html('<span class="text-danger">Hay Campos Vacios.</span>');
@@ -128,6 +132,8 @@ $('#btn-confirmar-pass').on('click', function() {
         data: {
             actual: pActual,
             nueva: pNueva,
+            iduser: iduser,
+            perfil: perfil
         },
         success: function(response) {
             console.log('llego hasta aca');
