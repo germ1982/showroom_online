@@ -354,15 +354,26 @@ class UserController extends Controller
                   // =====================
                   $rolesPost = $request->post('roles', []);
 
-                  // Borramos roles actuales
-                  User_usuario_rol::deleteAll(['idusuario' => $id]);
+                  // Roles a agregar
+                  $rolesAgregar = array_diff($rolesPost, $rolesActuales);
 
-                  // Insertamos los nuevos
-                  foreach ($rolesPost as $idrol) {
+                  // Roles a eliminar
+                  $rolesEliminar = array_diff($rolesActuales, $rolesPost);
+
+                  // Insertar nuevos
+                  foreach ($rolesAgregar as $idrol) {
                         $ur = new User_usuario_rol();
                         $ur->idusuario = $id;
                         $ur->idrol = $idrol;
                         $ur->save(false);
+                  }
+
+                  // Eliminar quitados
+                  if (!empty($rolesEliminar)) {
+                        User_usuario_rol::deleteAll([
+                              'idusuario' => $id,
+                              'idrol' => $rolesEliminar
+                        ]);
                   }
 
                   return [
