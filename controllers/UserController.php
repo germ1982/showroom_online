@@ -343,7 +343,7 @@ class UserController extends Controller
                                     'data-dismiss' => 'modal'
                               ]) .
                                     Html::button('Guardar', [
-                                          'class' => 'btn btn-primary',
+                                          'class' => 'btn btn-secondary',
                                           'type' => 'submit'
                                     ])
                         ];
