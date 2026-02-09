@@ -345,7 +345,8 @@ class UserController extends Controller
                               ]) .
                                     Html::button('Guardar', [
                                           'class' => 'btn btn-secondary',
-                                          'type' => 'submit'
+                                          'type' => 'submit',
+                                          'onclick' => 'limpiarRolesTemp();'
                                     ])
                         ];
                   }

@@ -10,5 +10,6 @@ use yii\helpers\Html;
 <div class="user-rol-create">
     <?= $this->render('_form', [
         'model' => $model,
+        'userId' => $userId,
     ]) ?>
 </div>

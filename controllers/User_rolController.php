@@ -82,39 +82,45 @@ class User_rolController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
+        $userId = Yii::$app->request->get('userId');
         $model = new User_rol();
 
         if ($request->isAjax) {
-            /*
-            *   Process for ajax request
-            */
+
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
                 return [
-                    'title' => "Nuevo Rol",
+                    'title' => "Nuevo Rol", //aca abro el modal para crear un nuevo rol desde el modal de roles del usuario, por eso el titulo es nuevo rol y no user_rol
                     'content' => $this->renderAjax('create', [
                         'model' => $model,
+                        'userId' => $userId,
                     ]),
-                    'footer' => Html::a(
-                            '<i class="fas fa-plus"></i> Cerrar',
-                            ['user/roles', 'id' => 1],
-                            [
-                                'class' => 'btn btn-success btn-sm',
-                                'role' => 'modal-remote',
-                                'title' => 'Cerrar',
-                                'onclick' => 'volverARoles();',
-                            ]
-                        ) .
-                        Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"])
+                    'footer' =>
+                    Html::a(
+                        'Volver a roles',
+                        ['user/roles'/* , 'id' => $userId */],
+                        [
+                            'class' => 'btn btn-secondary',
+                            'role' => 'modal-remote',
+                            'title' => 'Cerrar',
+                            'onclick' => 'volverARoles(' . $userId . ');',
+                        ]
+                    ) .
+                        Html::button('Guardar', ['class' => 'btn btn-secondary', 'type' => "submit"])
                     //los botones cerraar deberian volver al modal de roles del usuario y el guardar tambien pero ademas deberia guardar el rol creado y asignarlo al usuario que se esta editando
 
                 ];
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
-                    'forceClose' => true,
+                    /* 'forceClose' => true,
                     'nuevoRolId' => $model->idrol,
                     'nuevoRolNombre' => $model->nombre,
-                    'nuevoRolDescripcion' => $model->descripcion,
+                    'nuevoRolDescripcion' => $model->descripcion, */
+
+                    'success' => true,
+                    'nuevoRolId' => $model->idrol,
+                    'userId' => $userId,
+
                 ];
             } else {
                 return [
@@ -123,10 +129,11 @@ class User_rolController extends Controller
                         'model' => $model,
                     ]),
                     'footer' => Html::button('Cerrar', [
-                                        'class'=>'btn btn-secondary',
-                                        'onclick'=>'volverARoles();'
-                                    ]) .
-                                Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"])
+                        'class' => 'btn btn-secondary',
+                        'onclick' => "volverARoles(" . $userId . ");"
+                    ])
+                        .
+                        Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"])
 
                 ];
             }

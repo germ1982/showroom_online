@@ -19,13 +19,20 @@ $roles = User_rol::find()
     </h4>
 
     <?= Html::a(
-        '<i class="fas fa-plus"></i> Nuevo Rol',
-        ['user_rol/create'],
+        'Nuevo Rol', /// ete boton abre el modal para crear un nuevo rol desde el modal de roles del usuario, por eso el titulo es nuevo rol y no user_rol
+        [
+            /* debo pasar el userId porque al volver debo reabrir el modal de ese usuario
+            tembien debo pasar lo que estaba tilf¡dado aunque no este guardado eso lo hace en la funcion  */
+            'user_rol/create',
+            'userId' => $user->id, //paso el id del usuario para que al cerrar o guardar
+            // se carge nuevamente el modal de roles del usuario con el mismo usuario
+        ],
         [
             'class' => 'btn btn-success btn-sm',
             'role' => 'modal-remote',
             'title' => 'Crear rol',
-            'onclick' => 'guardarEstadoRoles();',
+            'onclick' => 'guardarEstadoRoles(' . $user->id . ');', //eesto solo guarda los roles tildados 
+            //antes de abrir el modal de crear nuevo rol, 
         ]
     ) ?>
 </div>
@@ -63,10 +70,8 @@ $roles = User_rol::find()
 <?php ActiveForm::end(); ?>
 
 <script>
-
-    limpiarRolesTemp();
-      
     function guardarEstadoRoles() {
+        //esto lo hace solo cuando va a agregar un nuevo rol
         let roles = [];
 
         $('input[name="roles[]"]:checked').each(function() {
@@ -76,10 +81,13 @@ $roles = User_rol::find()
         sessionStorage.setItem('rolesTemp', JSON.stringify(roles));
     }
 
-    $(document).ready(function() {
-
-        let rolesGuardados =
-            JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
+    /* $(document).ready(function() {
+        alert("ocurre el readiy de roles");
+        //aca vuelvo a levantar los roles tildados al volver del modal de crear nuevo rol, 
+        // lo hago leyendo el estado guardado en sessionStorage 
+        // en el caso de haber creado un nuevo rol, 
+        // ese nuevo rol se debe agregar al array de roles, y tildarlo chequear esto
+        let rolesGuardados = JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
 
         $('input[name="roles[]"]').each(function() {
 
@@ -88,17 +96,61 @@ $roles = User_rol::find()
             }
 
         });
-    });
+    }); */
 
-    function volverARoles() {
+    function volverARoles(idUsuario, idnuevorol = 0) {
 
-        $.get('index.php?r=user/roles&id=ID_USUARIO', function(data) {
+        console.log('Volviendo a roles en sessionStorage: ' + sessionStorage.getItem('rolesTemp'));
+        console.log("ID usuario:", idUsuario);
+        console.log('index.php?r=user/roles&id=' + idUsuario);
+        $.get(
 
-            $('#ajaxCrudModal .modal-content').html(data);
+            'index.php?r=user/roles&id=' + idUsuario,
+            function(data) {
 
-        });
+                $('#ajaxCrudModal .modal-title').html(data.title);
+                $('#ajaxCrudModal .modal-body').html(data.content);
+                $('#ajaxCrudModal .modal-footer').html(data.footer);
 
+                /* ahora tildamos lo que estaba */
+                let rolesGuardados = JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
+
+                $('input[name="roles[]"]').each(function() {
+
+                    if (rolesGuardados.includes($(this).val())) {
+                        $(this).prop('checked', true);
+                    }
+
+                });
+
+                /* marcar rol nuevo si existe */
+                if (idnuevorol != 0) {
+                    $('input[name="roles[]"][value="' + idnuevorol + '"]').prop('checked', true);
+                }
+            }
+        );
     }
+
+    /* $(document).on('ajaxComplete', function(event, xhr) {
+
+        let r;
+
+        try {
+            r = JSON.parse(xhr.responseText);
+        } catch (e) {
+            return;
+        }
+
+        if (r.success) {
+            volverARoles(r.userId, r.nuevoRolId);
+        }
+
+    }); */
+
+
+
+
+
 
 
     $(document).on('ajaxSuccess', function(event, xhr, settings) {
@@ -122,18 +174,19 @@ $roles = User_rol::find()
 
             // reabrir modal roles automáticamente
             $.get(
-                '/user/roles?id=' + userId,
+                'index.php?r=user/roles&id=' + userId,
                 function(data) {
                     $('.modal-body').html(data.content);
                     $('.modal-title').html(data.title);
                     $('.modal-footer').html(data.footer);
+
                 }
             );
         }
     });
 
     function limpiarRolesTemp() {
-     //alert('Limpiando estado temporal de roles');
-      sessionStorage.removeItem('rolesTemp');
+        console.log('Limpiando rolesTemp de sessionStorage');
+        sessionStorage.removeItem('rolesTemp');
     }
 </script>
