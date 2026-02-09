@@ -340,7 +340,8 @@ class UserController extends Controller
                               'footer'  =>
                               Html::button('Cerrar', [
                                     'class' => 'btn btn-secondary',
-                                    'data-dismiss' => 'modal'
+                                    'data-dismiss' => 'modal',
+                                    'onclick' => 'limpiarRolesTemp();'
                               ]) .
                                     Html::button('Guardar', [
                                           'class' => 'btn btn-secondary',

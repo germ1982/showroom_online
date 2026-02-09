@@ -63,6 +63,9 @@ $roles = User_rol::find()
 <?php ActiveForm::end(); ?>
 
 <script>
+
+    limpiarRolesTemp();
+      
     function guardarEstadoRoles() {
         let roles = [];
 
@@ -128,4 +131,9 @@ $roles = User_rol::find()
             );
         }
     });
+
+    function limpiarRolesTemp() {
+     //alert('Limpiando estado temporal de roles');
+      sessionStorage.removeItem('rolesTemp');
+    }
 </script>
