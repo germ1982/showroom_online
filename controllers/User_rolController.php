@@ -106,17 +106,14 @@ class User_rolController extends Controller
                             'onclick' => 'volverARoles(' . $userId . ');',
                         ]
                     ) .
-                        Html::button('Guardar', ['class' => 'btn btn-secondary', 'type' => "submit"])
-                    //los botones cerraar deberian volver al modal de roles del usuario y el guardar tambien pero ademas deberia guardar el rol creado y asignarlo al usuario que se esta editando
+                        Html::button('Guardar', ['class' => 'btn btn-primary', 
+                        'onclick' => "guardarNuevoRolDesdeModal($userId,$model->idrol);" //este onclick va a guardar el nuevo rol creado y luego va a volver al modal de roles del usuario, por eso el nombre de la funcion es guardarNuevoRolDesdeModal y no es de tipo submit
+                        ])
+                    
 
                 ];
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
-                    /* 'forceClose' => true,
-                    'nuevoRolId' => $model->idrol,
-                    'nuevoRolNombre' => $model->nombre,
-                    'nuevoRolDescripcion' => $model->descripcion, */
-
                     'success' => true,
                     'nuevoRolId' => $model->idrol,
                     'userId' => $userId,
@@ -133,7 +130,8 @@ class User_rolController extends Controller
                         'onclick' => "volverARoles(" . $userId . ");"
                     ])
                         .
-                        Html::button('Guardar', ['class' => 'btn btn-primary', 'type' => "submit"])
+                        Html::button('Guardar', ['class' => 'btn btn-primary', ])
+                        //ESTE BOTON VA A DEJAR DE SER SUBMIT PARA SER UN BOTON NORMAL QUE AL HACER CLICK PRIMERO GUARDA EL ROL CREADO Y LUEGO VUELVE AL MODAL DE ROLES DEL USUARIO, POR ESO EL ONCLICK ES VOLVERARROLES Y NO ES DE TIPO SUBMIT
 
                 ];
             }

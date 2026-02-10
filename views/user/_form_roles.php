@@ -14,9 +14,9 @@ $roles = User_rol::find()
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-2">
-    <h4 class="mb-0">
+    <h5 class="mb-0">
         Roles de <?= Html::encode($user->username) ?>
-    </h4>
+    </h5>
 
     <?= Html::a(
         'Nuevo Rol', /// ete boton abre el modal para crear un nuevo rol desde el modal de roles del usuario, por eso el titulo es nuevo rol y no user_rol
@@ -81,22 +81,7 @@ $roles = User_rol::find()
         sessionStorage.setItem('rolesTemp', JSON.stringify(roles));
     }
 
-    /* $(document).ready(function() {
-        alert("ocurre el readiy de roles");
-        //aca vuelvo a levantar los roles tildados al volver del modal de crear nuevo rol, 
-        // lo hago leyendo el estado guardado en sessionStorage 
-        // en el caso de haber creado un nuevo rol, 
-        // ese nuevo rol se debe agregar al array de roles, y tildarlo chequear esto
-        let rolesGuardados = JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
 
-        $('input[name="roles[]"]').each(function() {
-
-            if (rolesGuardados.includes($(this).val())) {
-                $(this).prop('checked', true);
-            }
-
-        });
-    }); */
 
     function volverARoles(idUsuario, idnuevorol = 0) {
 
@@ -131,59 +116,63 @@ $roles = User_rol::find()
         );
     }
 
-    /* $(document).on('ajaxComplete', function(event, xhr) {
-
-        let r;
-
-        try {
-            r = JSON.parse(xhr.responseText);
-        } catch (e) {
-            return;
-        }
-
-        if (r.success) {
-            volverARoles(r.userId, r.nuevoRolId);
-        }
-
-    }); */
-
-
-
 
 
 
 
     $(document).on('ajaxSuccess', function(event, xhr, settings) {
+        console.log('campturando ajaxSuccess en roles y solo actuo si es el ajax de crear rol');
 
-        if (xhr.responseJSON && xhr.responseJSON.success) {
+        if (!settings.url.includes('user_rol/create')) return;
 
-            let nuevoRolId = xhr.responseJSON.nuevoRolId;
-            let userId = xhr.responseJSON.userId;
+        let success = xhr.responseJSON?.success;
+        let nuevoRolId = xhr.responseJSON?.nuevoRolId;
+        let userId = xhr.responseJSON?.userId;
 
-            // recuperar estado guardado
-            let rolesGuardados =
-                JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
+        if (!success || !nuevoRolId || !userId) return;
 
-            // agregar nuevo rol
-            rolesGuardados.push(String(nuevoRolId));
+         $('#ajaxCrudModal').trigger('modal:loaded');
 
-            sessionStorage.setItem(
-                'rolesTemp',
-                JSON.stringify(rolesGuardados)
-            );
+        volverARoles(userId, nuevoRolId);
 
-            // reabrir modal roles automáticamente
-            $.get(
-                'index.php?r=user/roles&id=' + userId,
-                function(data) {
-                    $('.modal-body').html(data.content);
-                    $('.modal-title').html(data.title);
-                    $('.modal-footer').html(data.footer);
+        /* agregar_rol_a_rolesTemp(nuevoRolId);
+        abrir_modal_roles(userId); */
 
-                }
-            );
-        }
+
     });
+
+    function agregar_rol_a_rolesTemp(nuevoRolId) {
+        if (!nuevoRolId) return;
+
+        let rolesGuardados = JSON.parse(sessionStorage.getItem('rolesTemp') || '[]'); // recupero lo que ya estaba guardado
+
+        if (!rolesGuardados.includes(String(nuevoRolId))) { // si el nuevo rol no estaba ya guardado, lo agrego
+            rolesGuardados.push(String(nuevoRolId));
+            sessionStorage.setItem('rolesTemp', JSON.stringify(rolesGuardados)); // guardo el nuevo estado con el nuevo rol incluido
+        }
+    }
+
+    function abrir_modal_roles(userId) {
+        $.get(
+            'index.php?r=user/roles&id=' + userId,
+            function(data) {
+                $('#ajaxCrudModal .modal-title').html(data.title);
+                $('#ajaxCrudModal .modal-body').html(data.content);
+                $('#ajaxCrudModal .modal-footer').html(data.footer);
+                marcar_roles_tildados_desde_sessionStorage();
+            }
+        );
+    }
+
+    function marcar_roles_tildados_desde_sessionStorage() {
+        let rolesGuardados = JSON.parse(sessionStorage.getItem('rolesTemp') || '[]');
+
+        $('input[name="roles[]"]').each(function() {
+            if (rolesGuardados.includes($(this).val())) {
+                $(this).prop('checked', true);
+            }
+        });
+    }
 
     function limpiarRolesTemp() {
         console.log('Limpiando rolesTemp de sessionStorage');

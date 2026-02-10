@@ -107,6 +107,7 @@
       border-bottom: 1px solid #ddd;
       /* Línea divisoria con el cuerpo */
       font-size: 12px !important;
+      /* min-height: 50px!important; */
 }
 
 .modal-body-footer-wrapper {
@@ -120,6 +121,14 @@
       /* Elementos internos en columna (opcional, por si hay formularios) */
 }
 
+.modal-body {
+    max-height: 70vh; /* Limita la altura del cuerpo del modal al 70% del alto de la ventana */
+    overflow-y: auto; /* Habilita scroll vertical interno cuando el contenido supera esa altura */
+}
+body.modal-open {
+    overflow: hidden; /* Evita que la página principal haga scroll cuando el modal está abierto */
+}
+
 .modal-footer {
       border-top: 1px solid #ddd;
       /* Línea superior divisoria con el cuerpo */
@@ -129,26 +138,24 @@
 }
 
 .panel {
-      border: 0px !important;
-      background: var(--color-bg);
+      border: 0px !important; /* Elimina el borde por defecto del panel */
+      background: var(--color-bg); /* Aplica el color de fondo definido por variable CSS */
 }
 
 .panel-body {
-
-      padding: 0px !important;
+      padding: 0px !important; /* Quita el padding interno del cuerpo del panel */
 }
 
 .header-index-generico {
-
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      background: var(--color-bg);
-      padding: 0% !important;
-      padding-top: 15px;
+      font-size: 18px; /* Tamaño de fuente destacado para encabezados */
+      font-weight: bold; /* Hace el texto más visible */
+      margin-bottom: 10px; /* Espacio inferior respecto al contenido siguiente */
+      background: var(--color-bg); /* Fondo consistente con el tema */
+      padding: 0% !important; /* Elimina padding general */
+      padding-top: 15px; /* Agrega separación superior */
 }
 
 .navbar {
-      margin-bottom: 1px!important;
-      padding: 0% !important;
+      margin-bottom: 1px!important; /* Reduce el espacio inferior de la barra de navegación */
+      padding: 0% !important; /* Elimina padding interno de la navbar */
 }
