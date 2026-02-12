@@ -339,14 +339,14 @@ class UserController extends Controller
                               ]),
                               'footer'  =>
                               Html::button('Cerrar', [
+                                    'id' => 'btnCerrar',
                                     'class' => 'btn btn-secondary',
                                     'data-dismiss' => 'modal',
-                                    'onclick' => 'limpiarRolesTemp();'
                               ]) .
                                     Html::button('Guardar', [
+                                          'id' => 'btnGuardar',
                                           'class' => 'btn btn-secondary',
                                           'type' => 'submit',
-                                          'onclick' => 'limpiarRolesTemp();'
                                     ])
                         ];
                   }

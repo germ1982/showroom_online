@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="user-rol-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'form-rol']); ?>
     <div class="row">
         <div class="col-md-10">
             <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>

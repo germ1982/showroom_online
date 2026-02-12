@@ -12,7 +12,7 @@ class CommonIndexAsset extends AssetBundle
         'css/css_index_views.css', // <-- ¡Añade esta línea aquí!
     ];
     public $js = [
-        'js/common-index-modales-apertura-cierre.js',
+        //'js/common-index-modales-apertura-cierre.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
